@@ -1,15 +1,21 @@
 from cmd import Cmd
 from src.hashtag import Hashtag
 
-class APIPrompt(Cmd, Hashtag):
 
-    prompt = '>>>'
+class APIPrompt(Hashtag, Cmd):
 
-    def do_exit(self, inp):
-        print("Exit")
-        return True
+    def __init__(self, credentials):
+        Hashtag.__init__(self, credentials)
+        Cmd.__init__(self)
 
+    prompt = '>>'
 
-if __name__=='__main__':
+    def do_set_location(self, location):
+        self.set_location(location)
     
-    APIPrompt().cmdloop()
+    def do_trends(self, *args):
+        self.set_hashtags()
+        self.get_hashtags()
+    
+    def do_exit(self):
+        return True
